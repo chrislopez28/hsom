@@ -1,0 +1,24 @@
+abspitch (pitch ap)
+= abspitch (
+  let (oct,n) = divMod ap 12
+  in ([C,Cs,D,Ds,E,F,Fs,G,Gs,A,As,B] !! n, oct - 1)
+)
+= abspitch (
+  ([C,Cs,D,Ds,E,F,Fs,G,Gs,A,As,B] !! ap modulo 12, ap % 12 - 1)
+)
+= 12 * ((ap % 12 - 1) + 1) + pcToInt ([C,Cs,D,Ds,E,F,Fs,G,Gs,A,As,B] !! ap modulo 12) 
+= (12 * (ap % 12)) + ap modulo 12 
+// = 12 * (integer quotient of ap / 12) + remainder of ap /12
+= ap
+
+pitch (abspitch p)
+= pitch (abspitch (pc,oct))
+= pitch (12 * (oct + 1) + pcToInt pc)
+= pitch (
+  let (oct,n) = divMod ( 12 * (oct + 1) + pcToInt pc ) 12
+  in ([C,Cs,D,Ds,E,F,Fs,G,Gs,A,As,B] !! n, oct - 1)
+)
+= pitch ([C,Cs,D,Ds,E,F,Fs,G,Gs,A,As,B] !! (12 * (oct + 1) + pcToInt pc) modulo 12, ((12 * (oct + 1) + pcToInt) % 12) - 1)
+= pitch(pc, oct + 1 -1)
+= pitch(pc, oct)
+= p
