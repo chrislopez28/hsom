@@ -1,0 +1,5 @@
+xs = [1,2,3] :: [Integer]
+ys = map (+) xs
+
+// "map (+) xs" causes an error since the function (+) doesn't take in enough arguments as (x):: a -> a -> a.
+// Despite this "ys" has the type of [Integer -> Integer] as seen if you evaluate ":info ys"
