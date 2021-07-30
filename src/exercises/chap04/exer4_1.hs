@@ -1,8 +1,8 @@
 import Euterpea
 
-changeOctave :: Int -> Music Pitch -> Music Pitch 
+changeOctave :: Int -> Music a -> Music a
 changeOctave 0 m = m
-changeOctave n (Prim (Note d (pc, oct))) = (Prim (Note d (pc, oct + n)))
+changeOctave n m = Modify (Transpose (12 * n)) m
 
 mapF :: [Music Pitch] -> Int -> [Music Pitch]
 mapF xs y = map (\x -> changeOctave y x) xs
@@ -19,11 +19,11 @@ kyrie2 = line [qnr, a 3 hn, g 3 sn, f 3 sn, c 3 sn, bf 2 sn,
 
 m1 = line [kyrie, kyrie2]
 
-m2 = line [wnr, wnr, wnr, hnr, kyrie]
+m2 = line [wnr, wnr, wnr, hnr, changeOctave (-1) kyrie]
 
-m3 = line [wnr, christe]
+m3 = line [wnr, changeOctave 1 christe]
 
-m4 = line [wnr, wnr, wnr, wnr, hnr, christe]
+m4 = line [wnr, wnr, wnr, wnr, hnr, changeOctave 2 christe]
 
 christe = line [enr, e 3 en, e 3 en, e 3 en, f 3 sn, g 3 sn, f 3 sn, e 3 sn, f 3 sn, g 3 sn, e 3 sn, f 3 sn,
                 g 3 sn, a 3 sn, g 3 sn, f 3 sn,   g 3 sn, a 3 sn, f 3 sn, g 3 sn,   a 3 en, bf 3 sn, a 3 sn,   g 3 sn, f 3 sn, e 3 sn, d 3 sn,
